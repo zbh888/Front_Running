@@ -1,0 +1,215 @@
+{
+  "contractName": "IBE",
+  "abi": [
+    {
+      "inputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "constructor"
+    }
+  ],
+  "metadata": "{\"compiler\":{\"version\":\"0.5.16+commit.9c3226ce\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"}],\"devdoc\":{\"methods\":{}},\"userdoc\":{\"methods\":{}}},\"settings\":{\"compilationTarget\":{\"/Users/zbh/FrontRunning/FR/contracts/IBE.sol\":\"IBE\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"/Users/zbh/FrontRunning/FR/contracts/IBE.sol\":{\"keccak256\":\"0x545bd22dd1ca41033cfb8efd02ab4edd67d7d0ced5a329a82c39b3ca3f930dcd\",\"urls\":[\"bzz-raw://9c033e8aca4de5033d31d9a0de8810e9f1f102a3cfe05ba665980d6fd76d1775\",\"dweb:/ipfs/QmPMeCoWvuV72VRn8yN3fWR6akitto9xPbzWA2YykseMs1\"]}},\"version\":1}",
+  "bytecode": "0x6080604052348015600f57600080fd5b50603e80601d6000396000f3fe6080604052600080fdfea265627a7a723158203fbd702b821691a296ef10490a5004c0d16515a781da05c3ebf078fb2ae3a4f864736f6c63430005100032",
+  "deployedBytecode": "0x6080604052600080fdfea265627a7a723158203fbd702b821691a296ef10490a5004c0d16515a781da05c3ebf078fb2ae3a4f864736f6c63430005100032",
+  "sourceMap": "66:45:3:-;;;83:26;8:9:-1;5:2;;;30:1;27;20:12;5:2;83:26:3;66:45;;;;;;",
+  "deployedSourceMap": "66:45:3:-;;;;;",
+  "source": "// SPDX-License-Identifier: MIT\npragma solidity >=0.4.22 <0.9.0;\n\ncontract IBE {\n  constructor() public {\n  }\n}\n",
+  "sourcePath": "/Users/zbh/FrontRunning/FR/contracts/IBE.sol",
+  "ast": {
+    "absolutePath": "/Users/zbh/FrontRunning/FR/contracts/IBE.sol",
+    "exportedSymbols": {
+      "IBE": [
+        36
+      ]
+    },
+    "id": 37,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 31,
+        "literals": [
+          "solidity",
+          ">=",
+          "0.4",
+          ".22",
+          "<",
+          "0.9",
+          ".0"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "32:32:3"
+      },
+      {
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "contract",
+        "documentation": null,
+        "fullyImplemented": true,
+        "id": 36,
+        "linearizedBaseContracts": [
+          36
+        ],
+        "name": "IBE",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "body": {
+              "id": 34,
+              "nodeType": "Block",
+              "src": "104:5:3",
+              "statements": []
+            },
+            "documentation": null,
+            "id": 35,
+            "implemented": true,
+            "kind": "constructor",
+            "modifiers": [],
+            "name": "",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 32,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "94:2:3"
+            },
+            "returnParameters": {
+              "id": 33,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "104:0:3"
+            },
+            "scope": 36,
+            "src": "83:26:3",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "public"
+          }
+        ],
+        "scope": 37,
+        "src": "66:45:3"
+      }
+    ],
+    "src": "32:80:3"
+  },
+  "legacyAST": {
+    "attributes": {
+      "absolutePath": "/Users/zbh/FrontRunning/FR/contracts/IBE.sol",
+      "exportedSymbols": {
+        "IBE": [
+          36
+        ]
+      }
+    },
+    "children": [
+      {
+        "attributes": {
+          "literals": [
+            "solidity",
+            ">=",
+            "0.4",
+            ".22",
+            "<",
+            "0.9",
+            ".0"
+          ]
+        },
+        "id": 31,
+        "name": "PragmaDirective",
+        "src": "32:32:3"
+      },
+      {
+        "attributes": {
+          "baseContracts": [
+            null
+          ],
+          "contractDependencies": [
+            null
+          ],
+          "contractKind": "contract",
+          "documentation": null,
+          "fullyImplemented": true,
+          "linearizedBaseContracts": [
+            36
+          ],
+          "name": "IBE",
+          "scope": 37
+        },
+        "children": [
+          {
+            "attributes": {
+              "documentation": null,
+              "implemented": true,
+              "isConstructor": true,
+              "kind": "constructor",
+              "modifiers": [
+                null
+              ],
+              "name": "",
+              "scope": 36,
+              "stateMutability": "nonpayable",
+              "superFunction": null,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "parameters": [
+                    null
+                  ]
+                },
+                "children": [],
+                "id": 32,
+                "name": "ParameterList",
+                "src": "94:2:3"
+              },
+              {
+                "attributes": {
+                  "parameters": [
+                    null
+                  ]
+                },
+                "children": [],
+                "id": 33,
+                "name": "ParameterList",
+                "src": "104:0:3"
+              },
+              {
+                "attributes": {
+                  "statements": [
+                    null
+                  ]
+                },
+                "children": [],
+                "id": 34,
+                "name": "Block",
+                "src": "104:5:3"
+              }
+            ],
+            "id": 35,
+            "name": "FunctionDefinition",
+            "src": "83:26:3"
+          }
+        ],
+        "id": 36,
+        "name": "ContractDefinition",
+        "src": "66:45:3"
+      }
+    ],
+    "id": 37,
+    "name": "SourceUnit",
+    "src": "32:80:3"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.5.16+commit.9c3226ce.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "3.4.1",
+  "updatedAt": "2021-08-09T08:33:21.215Z",
+  "devdoc": {
+    "methods": {}
+  },
+  "userdoc": {
+    "methods": {}
+  }
+}

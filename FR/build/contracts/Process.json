@@ -1,0 +1,215 @@
+{
+  "contractName": "Process",
+  "abi": [
+    {
+      "inputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "constructor"
+    }
+  ],
+  "metadata": "{\"compiler\":{\"version\":\"0.5.16+commit.9c3226ce\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"}],\"devdoc\":{\"methods\":{}},\"userdoc\":{\"methods\":{}}},\"settings\":{\"compilationTarget\":{\"/Users/zbh/FrontRunning/FR/contracts/Process.sol\":\"Process\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"/Users/zbh/FrontRunning/FR/contracts/Process.sol\":{\"keccak256\":\"0x397c31a166703b6a1ac46d47ad21bf51179a9a360807c429daaddafd43f233d7\",\"urls\":[\"bzz-raw://8b0e1887b0351039a6288b768e09c89a8a52bb234c359569d87c6f8e533f4df0\",\"dweb:/ipfs/Qmeo192gFWSqPDWXq5sdXtnhqqufiEitMc7Pyfg3NVZKRR\"]}},\"version\":1}",
+  "bytecode": "0x6080604052348015600f57600080fd5b50603e80601d6000396000f3fe6080604052600080fdfea265627a7a72315820c137c2274c605aa217e71e640320b9da0d9a112a69bd7c4c2a5d375745843c4064736f6c63430005100032",
+  "deployedBytecode": "0x6080604052600080fdfea265627a7a72315820c137c2274c605aa217e71e640320b9da0d9a112a69bd7c4c2a5d375745843c4064736f6c63430005100032",
+  "sourceMap": "66:49:6:-;;;87:26;8:9:-1;5:2;;;30:1;27;20:12;5:2;87:26:6;66:49;;;;;;",
+  "deployedSourceMap": "66:49:6:-;;;;;",
+  "source": "// SPDX-License-Identifier: MIT\npragma solidity >=0.4.22 <0.9.0;\n\ncontract Process {\n  constructor() public {\n  }\n}\n",
+  "sourcePath": "/Users/zbh/FrontRunning/FR/contracts/Process.sol",
+  "ast": {
+    "absolutePath": "/Users/zbh/FrontRunning/FR/contracts/Process.sol",
+    "exportedSymbols": {
+      "Process": [
+        83
+      ]
+    },
+    "id": 84,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 78,
+        "literals": [
+          "solidity",
+          ">=",
+          "0.4",
+          ".22",
+          "<",
+          "0.9",
+          ".0"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "32:32:6"
+      },
+      {
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "contract",
+        "documentation": null,
+        "fullyImplemented": true,
+        "id": 83,
+        "linearizedBaseContracts": [
+          83
+        ],
+        "name": "Process",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "body": {
+              "id": 81,
+              "nodeType": "Block",
+              "src": "108:5:6",
+              "statements": []
+            },
+            "documentation": null,
+            "id": 82,
+            "implemented": true,
+            "kind": "constructor",
+            "modifiers": [],
+            "name": "",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 79,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "98:2:6"
+            },
+            "returnParameters": {
+              "id": 80,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "108:0:6"
+            },
+            "scope": 83,
+            "src": "87:26:6",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "public"
+          }
+        ],
+        "scope": 84,
+        "src": "66:49:6"
+      }
+    ],
+    "src": "32:84:6"
+  },
+  "legacyAST": {
+    "attributes": {
+      "absolutePath": "/Users/zbh/FrontRunning/FR/contracts/Process.sol",
+      "exportedSymbols": {
+        "Process": [
+          83
+        ]
+      }
+    },
+    "children": [
+      {
+        "attributes": {
+          "literals": [
+            "solidity",
+            ">=",
+            "0.4",
+            ".22",
+            "<",
+            "0.9",
+            ".0"
+          ]
+        },
+        "id": 78,
+        "name": "PragmaDirective",
+        "src": "32:32:6"
+      },
+      {
+        "attributes": {
+          "baseContracts": [
+            null
+          ],
+          "contractDependencies": [
+            null
+          ],
+          "contractKind": "contract",
+          "documentation": null,
+          "fullyImplemented": true,
+          "linearizedBaseContracts": [
+            83
+          ],
+          "name": "Process",
+          "scope": 84
+        },
+        "children": [
+          {
+            "attributes": {
+              "documentation": null,
+              "implemented": true,
+              "isConstructor": true,
+              "kind": "constructor",
+              "modifiers": [
+                null
+              ],
+              "name": "",
+              "scope": 83,
+              "stateMutability": "nonpayable",
+              "superFunction": null,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "parameters": [
+                    null
+                  ]
+                },
+                "children": [],
+                "id": 79,
+                "name": "ParameterList",
+                "src": "98:2:6"
+              },
+              {
+                "attributes": {
+                  "parameters": [
+                    null
+                  ]
+                },
+                "children": [],
+                "id": 80,
+                "name": "ParameterList",
+                "src": "108:0:6"
+              },
+              {
+                "attributes": {
+                  "statements": [
+                    null
+                  ]
+                },
+                "children": [],
+                "id": 81,
+                "name": "Block",
+                "src": "108:5:6"
+              }
+            ],
+            "id": 82,
+            "name": "FunctionDefinition",
+            "src": "87:26:6"
+          }
+        ],
+        "id": 83,
+        "name": "ContractDefinition",
+        "src": "66:49:6"
+      }
+    ],
+    "id": 84,
+    "name": "SourceUnit",
+    "src": "32:84:6"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.5.16+commit.9c3226ce.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "3.4.1",
+  "updatedAt": "2021-08-09T08:33:21.220Z",
+  "devdoc": {
+    "methods": {}
+  },
+  "userdoc": {
+    "methods": {}
+  }
+}
