@@ -23,14 +23,11 @@ contract Participate {
   }
 
 
-  function leave() public returns (bool) {
-    if(contains(msg.sender)){
-      Decrypters[msg.sender] = false;
-      emit Leave(msg.sender);
-      return true;
-      // TODO; potential reward could be given.
-    }
-    return false;
+  function leave() public {
+    require(contains(msg.sender), 'sender not in the group');
+    Decrypters[msg.sender] = false;
+    emit Leave(msg.sender);
+    // TODO; potential reward could be given.
   }
 
 

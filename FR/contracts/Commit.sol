@@ -21,6 +21,15 @@ contract Commit {
     uint index = length[blockNumber]; //default is 0
     length[blockNumber] = index + 1; // increment
 
+    // Simple commitment, could consider putting previous commitment to make it like a chain
+    //bytes memory package =
+    //abi.encodePacked(
+    //  index, // index of commitment in the storage
+    //  transaction, // encrypted transactions
+    //  blockNumber  // block number
+    //);
+    //bytes32 commitment = keccak256(package);
+
     Commitments[blockNumber][index] = commitment;
 
     emit TransactionCommit(commitment, blockNumber, index);
