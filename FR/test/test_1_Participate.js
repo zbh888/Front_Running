@@ -9,7 +9,11 @@ contract('Participate Async', function(accounts) {
     it('After signup, returns true', async function() {
         let contract = await Participate.deployed();
         // call join functin
-        await contract.join({from: accounts[1],value: 11});
+        let balance = await web3.eth.getBalance(accounts[1]);
+        console.log("Account1 balance: " + web3.utils.fromWei(balance, "ether") + " ETH");
+        await contract.join({from: accounts[1],value: 11e18});
+        let balance2 = await web3.eth.getBalance(accounts[1]);
+        console.log("Account1 balance: " + web3.utils.fromWei(balance2, "ether") + " ETH");
         let CheckIfIn = await contract.contains.call(accounts[1]);
         assert.equal(true, CheckIfIn);
     });
@@ -17,7 +21,7 @@ contract('Participate Async', function(accounts) {
         let contract = await Participate.deployed();
         let err = null
         try {
-            await contract.join({from: accounts[1],value: 11});
+            await contract.join({from: accounts[1],value: 11e18});
         } catch (error) {
             err = error
         }
@@ -35,7 +39,7 @@ contract('Participate Async', function(accounts) {
         let contract = await Participate.deployed();
         let err = null
         try {
-            await contract.join({from: accounts[2],value: 9});
+            await contract.join({from: accounts[2],value: 9e18});
         } catch (error) {
             err = error
         }

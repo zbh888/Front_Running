@@ -9,15 +9,14 @@ contract Participate {
   event Join(address _from);
   event Leave(address _from);
 
-  constructor() public {
-    EntryFee = 10;
+  constructor() public payable {
+    EntryFee = 10e18; // Same thing as 10 ether
   }
 
 
   function join() payable public {
     require(contains(msg.sender) == false); // not in the list
     require(msg.value >= EntryFee); // enough payment
-
     Decrypters[msg.sender] = true;
     emit Join(msg.sender);
   }
