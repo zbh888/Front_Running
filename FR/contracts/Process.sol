@@ -19,7 +19,7 @@ contract Process {
     ParticipateContract = ParticipateAddress;
   }
 
-  function executeCipherBatch(uint BlockNumber, bytes memory transactions) public {
+  function executeTX(uint BlockNumber, bytes memory transactions) public {
     uint length = CommitContract.getLength(BlockNumber);
     bytes32 commitment = keccak256(transactions);
 

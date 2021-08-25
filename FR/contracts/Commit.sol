@@ -7,12 +7,12 @@ contract Commit {
   // block number => (length of commitment)
   mapping (uint => uint) public length;
 
-  event TransactionCommit(bytes32 commitment, uint blockNumber, uint index);
+  event TransactionCommit(bytes32 EncryptedTX, uint blockNumber, uint index);
 
   constructor() public {
   }
   // Users' commitment should be the hash of plain message
-  function makeCommitment (bytes memory transaction, bytes32 commitment ,uint blockNumber) public payable {
+  function makeCommitment (bytes memory EncryptedTX, bytes32 commitment ,uint blockNumber) public payable {
     // Could adding more requirements to control the structures
     require(block.number < blockNumber, "Can only commit to future block");
     require(msg.value > 0, "Pay gas fee");
@@ -32,7 +32,7 @@ contract Commit {
 
     Commitments[blockNumber][index] = commitment;
 
-    emit TransactionCommit(commitment, blockNumber, index);
+    emit TransactionCommit(EncryptedTX, blockNumber, index);
   }
 
   // get commitment
