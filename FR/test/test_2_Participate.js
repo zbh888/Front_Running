@@ -8,7 +8,7 @@ contract('Participate Async', function(accounts) {
     });
     it('After signup, returns true', async function() {
         let contract = await Participate.deployed();
-        // call join functin
+        // call join function
         let balance = await web3.eth.getBalance(accounts[1]);
         console.log("Account1 balance: " + web3.utils.fromWei(balance, "ether") + " ETH");
         await contract.join({from: accounts[1],value: 11e18});

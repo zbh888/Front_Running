@@ -8,11 +8,10 @@ import {Commit} from "./Commit.sol";
 
 contract Process {
   // BlockNumber => which one to execute
-  mapping (uint => uint) public ProcessOrderList;
+  mapping (uint => mapping (uint => bool)) public ProcessedList;
 
-  event ProcessSuccess(uint BlockNumber, uint order);
-  event ProcessFailure(uint BlockNumber, uint order);
-
+  event CommitmentConfirmed(uint BlockNumber, uint order);
+  event CommitmentNotConfirmed(uint BlockNumber, uint order);
   event ExFailure();
 
   Commit CommitContract;
@@ -27,15 +26,17 @@ contract Process {
     FUNC_SELECTOR = bytes4(keccak256("sayHello()"));
   }
 
-  function executeTX(uint BlockNumber, bytes memory transaction, string memory rand) public {
+  function executeTX(uint BlockNumber, uint index, bytes memory transaction, string memory rand) public payable {
+   // require(block.number == BlockNumber, "Block number not matching");
     uint length = CommitContract.getLength(BlockNumber);
     bytes32 commitment = keccak256(abi.encodePacked(transaction, rand));
-
     require(ParticipateContract.contains(msg.sender), "Not in participating list.");
-    require(ProcessOrderList[BlockNumber] < length, "index out of block commitment list range.");
+    require(index < length, "index out of block commitment list range.");
+    require(ProcessedList[BlockNumber][index] == false, "has been processed");
+    ProcessedList[BlockNumber][index] = true;
 
-    if(commitment == CommitContract.getCommitment(BlockNumber, ProcessOrderList[BlockNumber])) {
-      emit ProcessSuccess(BlockNumber, ProcessOrderList[BlockNumber]);
+    if(commitment == CommitContract.getCommitment(BlockNumber, index)) {
+      emit CommitmentConfirmed(BlockNumber, index);
       // Pass the transaction to target address
       bytes memory data = abi.encodeWithSelector(FUNC_SELECTOR, transaction);
       (bool success, bytes memory returnData) = address(TargetContract).call(data);
@@ -43,9 +44,7 @@ contract Process {
         emit ExFailure();
       }
     } else {
-      emit ProcessFailure(BlockNumber, ProcessOrderList[BlockNumber]);
-    }
-
-    ProcessOrderList[BlockNumber] = ProcessOrderList[BlockNumber] + 1;
+      emit CommitmentNotConfirmed(BlockNumber, index);
+     }
   }
 }

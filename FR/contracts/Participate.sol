@@ -15,7 +15,7 @@ contract Participate {
 
 
   function join() payable public {
-    require(contains(msg.sender) == false); // not in the list
+    require(contains(msg.sender) == false, 'already being a participator.'); // not in the list
     require(msg.value >= EntryFee); // enough payment
     Decrypters[msg.sender] = true;
     emit Join(msg.sender);
