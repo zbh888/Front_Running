@@ -20,7 +20,8 @@ contract Commit {
     // Make commitment
     uint index = length[blockNumber]; //default is 0
     length[blockNumber] = index + 1; // increment
-    Commitments[blockNumber][index] = commitment;
+    // commitment for both identity and tx commitment
+    Commitments[blockNumber][index] = keccak256(abi.encodePacked(msg.sender, commitment));
     emit TransactionCommit(EncryptedTX, rand, blockNumber, index);
   }
 

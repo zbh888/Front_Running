@@ -39,9 +39,11 @@ contract('Commit Async', function(accounts) {
         let length2 = await contract.getLength.call(blockNumber2);
         let c1 = await contract.getCommitment.call(blockNumber2, 0);
         let c2 = await contract.getCommitment.call(blockNumber2, 1);
+        let commitment11 = web3.utils.soliditySha3(accounts[4], commitment);
+        let commitment22 = web3.utils.soliditySha3(accounts[5], commitment2);
         assert.equal(0, length1);
         assert.equal(2, length2);
-        assert.equal(commitment, c1);
-        assert.equal(commitment2,c2);
+        assert.equal(commitment11, c1);
+        assert.equal(commitment22,c2);
     });
 });

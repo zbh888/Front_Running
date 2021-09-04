@@ -23,13 +23,16 @@ contract Process {
     CommitContract = CommitAddress;
     ParticipateContract = ParticipateAddress;
     TargetContract = TargetAddress;
-    FUNC_SELECTOR = bytes4(keccak256("sayHello()"));
+    FUNC_SELECTOR = bytes4(keccak256("sayHello(bytes)"));
   }
 
   function executeTX(uint BlockNumber, uint index, bytes memory transaction, string memory rand) public payable {
    // require(block.number == BlockNumber, "Block number not matching");
     uint length = CommitContract.getLength(BlockNumber);
+    TX memory aTX = _decode(transaction);
     bytes32 commitment = keccak256(abi.encodePacked(transaction, rand));
+    commitment = keccak256(abi.encodePacked(aTX.owner, commitment));
+
     require(ParticipateContract.contains(msg.sender), "Not in participating list.");
     require(index < length, "index out of block commitment list range.");
     require(ProcessedList[BlockNumber][index] == false, "has been processed");
@@ -46,5 +49,18 @@ contract Process {
     } else {
       emit CommitmentNotConfirmed(BlockNumber, index);
      }
+  }
+
+  struct TX {
+    // TODO could add field like signature, from, to...
+    bytes data; // additional data left for messages
+    address owner; // transaction sender
+  }
+
+  function _decode(bytes memory transaction) internal returns (TX memory) {
+    bytes memory data;
+    address owner;
+    (data, owner) = abi.decode(transaction, (bytes, address));
+    return TX(data, owner);
   }
 }

@@ -18,12 +18,18 @@ contract('Process Async', function(accounts) {
         await ParticipateContract.join({from: accounts[7],value: 11e18});
 
         // account 4 as user sending the encrypted transaction for say hello.
-        // Seems explained a lot
+        // Seems explained a lot about transaction (NOTE)
         // https://medium.com/@codetractio/inside-an-ethereum-transaction-fa94ffca912f
-        // TODO For some reason, I think this tx has been executed...
-        // TODO transaction data wasn't in use at all
-        let tx = new Tx(TargetContract.sayHello({from: accounts[4]}));
-        tx = tx.serialize();
+
+        var rawTx = {
+            data: '0xc0de',
+            owner: accounts[4]
+        };
+        let tx = web3.eth.abi.encodeParameters(
+            ['bytes', 'address'],
+            [rawTx.data, rawTx.owner]
+        );
+
         // And he/she selected a random string.
         let rand = "a random string";
         // They say this function is same as keccak256(abi.encondePacked(...))
@@ -36,7 +42,6 @@ contract('Process Async', function(accounts) {
         // and decrypted immediately for unit testing
         let DecryptedTx = tx
         // execution
-        // TODO, the target contract was assuming the msg.sender is this executor contract.
         await ProcessContract.executeTX(blocknumber, 0, DecryptedTx, rand, {from: accounts[5], value: 1e18});
     });
     it('Invalid cases', async function() {
@@ -44,8 +49,14 @@ contract('Process Async', function(accounts) {
         let CommitContract = await Commit.deployed();
         let ProcessContract = await Process.deployed();
 
-        let tx = new Tx(TargetContract.sayHello({from: accounts[5]}));
-        tx = tx.serialize();
+        var rawTx = {
+            data: '0xc0de',
+            owner: accounts[4]
+        };
+        let tx = web3.eth.abi.encodeParameters(
+            ['bytes', 'address'],
+            [rawTx.data, rawTx.owner]
+        );
         // And he/she selected a random string.
         let rand = "a random string2";
         let Commitment = web3.utils.soliditySha3(tx, rand)
@@ -85,8 +96,14 @@ contract('Process Async', function(accounts) {
         let CommitContract = await Commit.deployed();
         let ProcessContract = await Process.deployed();
 
-        let tx = new Tx(TargetContract.sayHello({from: accounts[6]}));
-        tx = tx.serialize();
+        var rawTx = {
+            data: '0xc0de',
+            owner: accounts[4]
+        };
+        let tx = web3.eth.abi.encodeParameters(
+            ['bytes', 'address'],
+            [rawTx.data, rawTx.owner]
+        );
         // And he/she selected a random string.
         let rand = "a random string2";
         let Commitment = web3.utils.soliditySha3('it is just random');
@@ -97,26 +114,6 @@ contract('Process Async', function(accounts) {
         // and decrypted immediately for unit testing
         let DecryptedTx = tx
         // execution
-        await ProcessContract.executeTX(blocknumber, 0, DecryptedTx, rand, {from: accounts[5], value: 1e18});
-    });
-    it('Commitment is correct, but the data cannot be executed', async function() {
-        let CommitContract = await Commit.deployed();
-        let ProcessContract = await Process.deployed();
-
-        // account 5 as user sending the encrypted transaction for say hello.
-        // Seems explained a lot
-        // https://medium.com/@codetractio/inside-an-ethereum-transaction-fa94ffca912f
-        let tx = web3.utils.fromAscii('cannot be executed');
-        let rand = "a random string";
-        let Commitment = web3.utils.soliditySha3(tx, rand);
-        let blocknumber = 3002;
-        let EncryptedTx = tx // for testing process.sol, doesn't encrypt at all.
-        // then make a commitment
-        await CommitContract.makeCommitment(EncryptedTx, rand, Commitment, blocknumber, {from: accounts[4], value: 1e18});
-        // and decrypted immediately for unit testing
-        let DecryptedTx = tx
-        // execution
-        // TODO fix this
         await ProcessContract.executeTX(blocknumber, 0, DecryptedTx, rand, {from: accounts[5], value: 1e18});
     });
 });
