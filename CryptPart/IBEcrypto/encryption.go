@@ -23,4 +23,6 @@ func encrypt(message string, pk ibe.Params, ID string) ([]byte, error) {
 
 	fmt.Println("Encryption Success")
 	return C, nil
-}
+} 
+
+
