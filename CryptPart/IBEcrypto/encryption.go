@@ -4,25 +4,19 @@ import (
 	"encoding/hex"
 	"errors"
 	"fmt"
-	"v.io/x/lib/ibe"
+	"github.com/zbh888/crypto/ibe"
+	"vuvuzela.io/crypto/rand"
 )
 
-func encrypt(message string, pk ibe.Params, ID string) ([]byte, error) {
+func encrypt(message string, pk *ibe.MasterPublicKey, ID string) (ibe.Ciphertext, error) {
 	fmt.Println("-----> Encryption part")
-	overhead := pk.CiphertextOverhead()
+	var C ibe.Ciphertext
 	messageBytes, err := hex.DecodeString(message)
-	C := make([]byte, len(messageBytes)+overhead)
 	if err != nil {
 		return C, errors.New("hex decoding fails")
 	}
-	err2 := pk.Encrypt(ID, messageBytes, C)
-	if err2 != nil {
-		// encryption is not ok
-		return C, errors.New("encryption fails")
-	}
-
+	fmt.Println("-----> Message encoded")
+	C = ibe.Encrypt(rand.Reader, pk, []byte(ID), messageBytes)
 	fmt.Println("Encryption Success")
 	return C, nil
-} 
-
-
+}

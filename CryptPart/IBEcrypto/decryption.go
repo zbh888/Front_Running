@@ -2,17 +2,12 @@ package IBEcrypto
 
 import (
 	"encoding/hex"
-	"errors"
 	"fmt"
-	"v.io/x/lib/ibe"
+	"github.com/zbh888/crypto/ibe"
 )
 
-func decrypt(C []byte, overhead int, sk ibe.PrivateKey) (string, error) {
-	res := make([]byte, len(C)-overhead)
-	err := sk.Decrypt(C, res)
-	if err != nil {
-		return "", errors.New("decryption fails")
-	}
+func decrypt(C ibe.Ciphertext, sk *ibe.IdentityPrivateKey) (string, error) {
+	res, _ := ibe.Decrypt(sk, C)
 	fmt.Println("-----> Decryption Success")
 	return hex.EncodeToString(res), nil
 }

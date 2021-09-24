@@ -3,21 +3,22 @@ package IBEcrypto
 import (
 	"reflect"
 	"testing"
-	"v.io/x/lib/ibe"
+	"github.com/zbh888/crypto/ibe"
+	"vuvuzela.io/crypto/rand"
 )
 
 func Test(t *testing.T) {
-	master, _ := ibe.SetupBB1()
+	// Key Generation, private key is not master secret
+	PK,secret := ibe.Setup(rand.Reader)
 	message := "000000000000000000000000000000000000000000000000000000000000004000000000000000000000000037f20d96a0ed94e7ae25661ffdcb00155b27ca4d0000000000000000000000000000000000000000000000000000000000000002c0de000000000000000000000000000000000000000000000000000000000000"
 	ID := "3000"
-	// Key Generation, private key is not master secret
-	SK, _ := master.Extract(ID)
+	SK := ibe.Extract(secret, []byte(ID))
 	// Encryption
-	Cipher, err := encrypt(message, master.Params(), ID)
+	Cipher, err := encrypt(message, PK, ID)
 	if err != nil {
 		t.Error(err)
 	}
-	m, err := decrypt(Cipher, master.Params().CiphertextOverhead(), SK)
+	m, err := decrypt(Cipher, SK)
 	if err != nil {
 		t.Error(err)
 	}
