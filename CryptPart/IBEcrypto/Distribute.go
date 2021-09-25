@@ -2,8 +2,8 @@ package IBEcrypto
 
 import (
 	"github.com/zbh888/crypto/ibe"
-	"vuvuzela.io/crypto/bn256"
 	"math/big"
+	"vuvuzela.io/crypto/bn256"
 )
 
 // http://cryptojedi.org/papers/dclxvi-20100714.pdf
