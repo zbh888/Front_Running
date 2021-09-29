@@ -12,41 +12,39 @@ import (
 
 // https://github.com/vuvuzela/crypto/blob/master/ibe/ibe.go
 
-// signer is the current index, S contains the other participated key holders.
-// P is random generator
-func SecretShareProcess(share *big.Int, P *bn256.G1, ID string, signer uint32, S []uint32) (*ibe.MasterPublicKey, *ibe.IdentityPrivateKey) {
-	scaler := big.NewInt(1).Mul(LagrangeCoefficient(signer, S), share)
-	scaler.Mod(scaler, bn256.Order)
 
-	public := new(bn256.G1).ScalarMult(P, scaler)
-	retPk := new(ibe.MasterPublicKey).SetValue(public)
-	retSk := new(ibe.MasterPrivateKey).SetValue(scaler)
-	retIdentityK := ibe.Extract(retSk, []byte(ID))
-	return retPk, retIdentityK
-}
-
-// publish Publickey, Save identityKey for use
-func Aggregation(PkShares []*ibe.MasterPublicKey, SkShares[] *ibe.IdentityPrivateKey) (*ibe.MasterPublicKey, *ibe.IdentityPrivateKey) {
+// publish Public key,
+func AggregationPK(Commitments []Commitment, S []uint32) *ibe.MasterPublicKey {
+	PkShares := []*ibe.MasterPublicKey{}
+	for _, c := range Commitments {
+		Pk := new(ibe.MasterPublicKey).SetValue(new(bn256.G1).ScalarMult(c.Value, lagrangeCoefficient(c.Index, S)))
+		PkShares = append(PkShares, Pk)
+	}
 	PK := new(ibe.MasterPublicKey).Aggregate(PkShares...)
-	SK := new(ibe.IdentityPrivateKey).Aggregate(SkShares...)
-	return PK, SK
+	return PK
 }
 
-func LagrangeCoefficient(signer uint32, S []uint32) *big.Int {
-	nominator := big.NewInt(1)
-	denominator := big.NewInt(1)
-	for _, s := range S {
-		if s != signer {
-			nominator.Mul(nominator, big.NewInt(int64(s)))
-			nominator.Mod(nominator,bn256.Order)
+// sender process the share and send to the dealer
+func SecretShareProcess(share *big.Int, ID string, sender uint32) SentShare {
+	retSk := new(ibe.MasterPrivateKey).SetValue(share)
+	retIdentityK := ibe.Extract(retSk, []byte(ID))
+	return SentShare{sender, retIdentityK}
+}
 
-			denominator.Mul(denominator,
-				big.NewInt(1).Add(
-					big.NewInt(int64(s)),
-					big.NewInt(1).Neg(big.NewInt(int64(signer)))))
-			denominator.Mod(denominator, bn256.Order)
+func AggregationSK(ReceivedShares []SentShare, Commitments []Commitment, ID string, S []uint32) (*ibe.IdentityPrivateKey, []uint32) {
+	SkShares := []*ibe.IdentityPrivateKey{}
+	Invalid := []uint32{}
+	for i, _ := range ReceivedShares {
+		receivedShare := ReceivedShares[i]
+		commitment := Commitments[i]
+		G2 := new(bn256.G2).HashToPoint([]byte(ID))
+		if validityCheck(commitment, receivedShare, G2) {
+			processedShare := processSK(receivedShare, S)
+			SkShares = append(SkShares, processedShare.Share)
+		} else {
+			Invalid = append(Invalid, commitment.Index)
 		}
 	}
-	return big.NewInt(1).Mul(
-		nominator, big.NewInt(1).ModInverse(denominator,bn256.Order)) //Inverse will panic if denominator is 0
+	SK := new(ibe.IdentityPrivateKey).Aggregate(SkShares...)
+	return SK, Invalid
 }
