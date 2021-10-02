@@ -3,6 +3,7 @@ pragma solidity >=0.4.22 <0.9.0;
 
 contract Participate {
 
+  // To keep a record of if an address is a valid keyper
   mapping (address => bool) public Decrypters;
   uint EntryFee;
 
@@ -21,14 +22,12 @@ contract Participate {
     emit Join(msg.sender);
   }
 
-
   function leave() public {
     require(contains(msg.sender), 'sender not in the group');
     Decrypters[msg.sender] = false;
     emit Leave(msg.sender);
     // TODO; potential reward could be given.
   }
-
 
   function contains(address addr) public returns (bool){
     return Decrypters[addr];

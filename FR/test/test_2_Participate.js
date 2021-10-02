@@ -1,6 +1,28 @@
 var Participate = artifacts.require('Participate');
 
 contract('Participate Async', function(accounts) {
+
+
+
+
+    it('Demo', async function() {
+        let contract = await Participate.deployed();
+
+
+        // account 7 joins the keyper group, pays 11 ether, which is higher than entry fee
+        await contract.join({from: accounts[7],value: 11e18});
+        let CheckIfIn_afterJoin = await contract.contains.call(accounts[7]);
+        assert.equal(true, CheckIfIn_afterJoin);
+
+        // account 7 leaves the keyper group
+        await contract.leave({from: accounts[7]});
+        let CheckIfIn_afterLeave = await contract.contains.call(accounts[7]);
+        assert.equal(false, CheckIfIn_afterLeave);
+    });
+
+
+
+    // ===========================Unit testing============================
     it('Without signup, returns false', async function() {
         let contract = await Participate.deployed();
         let CheckIfIn = await contract.contains.call(accounts[1]);

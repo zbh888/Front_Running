@@ -34,16 +34,22 @@ func SecretShareProcess(share *big.Int, ID string, sender uint32) SentShare {
 func AggregationSK(ReceivedShares []SentShare, Commitments []Commitment, ID string, S []uint32) (*ibe.IdentityPrivateKey, []uint32) {
 	SkShares := []*ibe.IdentityPrivateKey{}
 	Invalid := []uint32{}
+	Valid := []uint32{}
+	ValidShare := []SentShare{}
 	for i, _ := range ReceivedShares {
 		receivedShare := ReceivedShares[i]
 		commitment := Commitments[i]
 		G2 := new(bn256.G2).HashToPoint([]byte(ID))
 		if validityCheck(commitment, receivedShare, G2) {
-			processedShare := processSK(receivedShare, S)
-			SkShares = append(SkShares, processedShare.Share)
+			Valid = append(Valid, receivedShare.Index)
+			ValidShare = append(ValidShare, receivedShare)
 		} else {
 			Invalid = append(Invalid, commitment.Index)
 		}
+	}
+	for _, r := range ValidShare {
+		processedShare := processSK(r, Valid)
+		SkShares = append(SkShares, processedShare.Share)
 	}
 	SK := new(ibe.IdentityPrivateKey).Aggregate(SkShares...)
 	return SK, Invalid

@@ -5,14 +5,12 @@ var Process = artifacts.require('Process');
 
 
 contract('Process Async', function(accounts) {
-    var Tx = require('ethereumjs-tx').Transaction
-    it('working test', async function() {
-        let TargetContract = await HelloWorld.deployed();
+    it('Demo', async function() {
         let CommitContract = await Commit.deployed();
         let ParticipateContract = await Participate.deployed();
         let ProcessContract = await Process.deployed();
 
-        // Three participators, accounts 5, 6, 7, making threshold as 2 for DKG for a testing purpose.
+        // Three participators, accounts 5, 6, 7
         await ParticipateContract.join({from: accounts[5],value: 11e18});
         await ParticipateContract.join({from: accounts[6],value: 11e18});
         await ParticipateContract.join({from: accounts[7],value: 11e18});
@@ -21,6 +19,10 @@ contract('Process Async', function(accounts) {
         // Seems explained a lot about transaction (NOTE)
         // https://medium.com/@codetractio/inside-an-ethereum-transaction-fa94ffca912f
 
+        // This TX structure could be treated as a specific form of information collection in this system
+        // We could add field whatever we want such as gas, gas limit or signature, these should matching the info from
+        // the commitment contract. Such as owner must match the user's address. This could be checked automatically
+        // in process.sol
         var rawTx = {
             data: '0xc0de',
             owner: accounts[4]
@@ -29,21 +31,23 @@ contract('Process Async', function(accounts) {
             ['bytes', 'address'],
             [rawTx.data, rawTx.owner]
         );
-
         // And he/she selected a random string.
         let rand = "a random string";
-        // They say this function is same as keccak256(abi.encondePacked(...))
-        // ref: https://blog.8bitzen.com/posts/18-03-2019-keccak-abi-encodepacked-with-javascript/
-        let Commitment = web3.utils.soliditySha3(tx, rand)
-        let blocknumber = 3000;
-        let EncryptedTx = tx // for testing process.sol, doesn't encrypt at all.
+        let Commitment = web3.utils.soliditySha3(tx, rand) // make the hash commitment of plain text
+        let blocknumber = 3000; // pick a future block number
+        let EncryptedTx = tx // Then they encrypt this ......
+
         // then make a commitment
         await CommitContract.makeCommitment(EncryptedTx, rand, Commitment, blocknumber, {from: accounts[4], value: 1e18});
-        // and decrypted immediately for unit testing
+        // Decrypters in the system should be able to decrypt them
         let DecryptedTx = tx
         // execution
-        await ProcessContract.executeTX(blocknumber, 0, DecryptedTx, rand, {from: accounts[5], value: 1e18});
+        await ProcessContract.executeTX(
+            blocknumber, 0, // This is the index of commitment in Commit.sol
+            DecryptedTx, rand, {from: accounts[5], value: 1e18});
     });
+
+    //============================Unit Testing=========================
     it('Invalid cases', async function() {
         let TargetContract = await HelloWorld.deployed();
         let CommitContract = await Commit.deployed();

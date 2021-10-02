@@ -11,8 +11,13 @@ contract Commit {
 
   constructor() public {
   }
-  // Users' commitment should be the hash of plain message
-  function makeCommitment (bytes memory EncryptedTX, string memory rand, bytes32 commitment ,uint blockNumber) public payable {
+
+  // This function should be the only function that users would use
+  function makeCommitment (
+    bytes memory EncryptedTX,
+    string memory rand, // randomness to decide the executing order
+    bytes32 commitment,
+    uint blockNumber) public payable {
     // Could adding more requirements to control the structures
     require(block.number < blockNumber, "Can only commit to future block");
     require(msg.value > 0, "Pay gas fee");

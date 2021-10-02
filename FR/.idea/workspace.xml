@@ -1,7 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="a75b4cfd-e996-40c2-bdbb-8d22c888325e" name="Default Changelist" comment="" />
+    <list default="true" id="a75b4cfd-e996-40c2-bdbb-8d22c888325e" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/contracts/Commit.sol" beforeDir="false" afterPath="$PROJECT_DIR$/contracts/Commit.sol" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/contracts/DKG.sol" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/contracts/IBE.sol" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/contracts/Participate.sol" beforeDir="false" afterPath="$PROJECT_DIR$/contracts/Participate.sol" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/test_2_Participate.js" beforeDir="false" afterPath="$PROJECT_DIR$/test/test_2_Participate.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/test_4_Process.js" beforeDir="false" afterPath="$PROJECT_DIR$/test/test_4_Process.js" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -15,7 +23,11 @@
     </option>
   </component>
   <component name="GOROOT" url="file:///usr/local/Cellar/go/1.15.7_1/libexec" />
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
   <component name="ProjectId" id="1wTvBRyGC8ooxg0z7nFwvROFufO" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />

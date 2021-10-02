@@ -24,7 +24,7 @@ contract HelloWorld {
         order = 1;
   }
     function sayHello(bytes memory transaction) public {
-        // TODO target contract should only accept what from process
+        // TODO Make it payable
         TX memory aTX = _decode(transaction);
         emit Hello(aTX.owner, order);
         order += 1;

@@ -29,7 +29,7 @@ contract Process {
   function executeTX(uint BlockNumber, uint index, bytes memory transaction, string memory rand) public payable {
    // require(block.number == BlockNumber, "Block number not matching");
     uint length = CommitContract.getLength(BlockNumber);
-    TX memory aTX = _decode(transaction);
+    TX memory aTX = _decode(transactioen);
     bytes32 commitment = keccak256(abi.encodePacked(transaction, rand));
     commitment = keccak256(abi.encodePacked(aTX.owner, commitment));
 
