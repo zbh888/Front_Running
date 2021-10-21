@@ -30,7 +30,7 @@ func Test(t *testing.T) {
 }
 
 func f(x int64) *big.Int {
-	return big.NewInt( 1234 + 166*x*x + 94*x*x)
+	return big.NewInt( 1234 + 166*x + 94*x*x)
 }
 
 // threshold 3, player 3, all honest
