@@ -56,6 +56,9 @@ func Test2(t *testing.T) {
 	// For now, player 2,4,5 have their shares. They are going to process the share and submit the processed key share
 	// In vuvuzela.io/crypto/ibe they choose to encrypt using the base generator of G1. So for testing purpose
 	// This P can not be random, but it shouldn't affect the security since the secret is unknown
+	index2Share = f(2)
+	index4Share = f(4)
+	index5Share = f(5)
 	P := new(bn256.G1).ScalarBaseMult(big.NewInt(1))
 	c2 := generateCommitment(index2Share, P, 2)
 	c4 := generateCommitment(index4Share, P, 4)
@@ -97,6 +100,9 @@ func Test3(t *testing.T) {
 	// For now, player 2,4,5 have their shares. They are going to process the share and submit the processed key share
 	// In vuvuzela.io/crypto/ibe they choose to encrypt using the base generator of G1. So for testing purpose
 	// This P can not be random, but it shouldn't affect the security since the secret is unknown
+	index2Share = f(2)
+	index4Share = f(4)
+	index5Share = f(5)
 	P := new(bn256.G1).ScalarBaseMult(big.NewInt(1))
 	c2 := generateCommitment(index2Share, P, 2)
 	c4 := generateCommitment(index4Share, P, 4)
