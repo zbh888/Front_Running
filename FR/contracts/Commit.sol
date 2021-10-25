@@ -7,7 +7,7 @@ contract Commit {
   // block number => (length of commitment)
   mapping (uint => uint) public length;
 
-  event TransactionCommit(bytes EncryptedTX, string rand, uint blockNumber, uint index);
+  event TransactionCommit(bytes EncryptedTX, uint blockNumber, uint index);
 
   constructor() public {
   }
@@ -15,19 +15,18 @@ contract Commit {
   // This function should be the only function that users would use
   function makeCommitment (
     bytes memory EncryptedTX,
-    string memory rand, // randomness to decide the executing order
     bytes32 commitment,
     uint blockNumber) public payable {
     // Could adding more requirements to control the structures
     require(block.number < blockNumber, "Can only commit to future block");
-    require(msg.value > 0, "Pay gas fee");
+    require(msg.value > 0, "Pay support fee");
 
     // Make commitment
     uint index = length[blockNumber]; //default is 0
     length[blockNumber] = index + 1; // increment
     // commitment for both identity and tx commitment
     Commitments[blockNumber][index] = keccak256(abi.encodePacked(msg.sender, commitment));
-    emit TransactionCommit(EncryptedTX, rand, blockNumber, index);
+    emit TransactionCommit(EncryptedTX, blockNumber, index);
   }
 
   // get commitment
