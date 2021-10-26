@@ -5,7 +5,7 @@ var Process = artifacts.require('Process');
 
 
 contract('Process Async', function(accounts) {
-    it('Demo', async function() {
+    it('Demo for 1', async function() {
 
 
         let CommitContract = await Commit.deployed();
@@ -52,6 +52,91 @@ contract('Process Async', function(accounts) {
         await ProcessContract.executeTX(
             blocknumber, 0, // This is the index of commitment in Commit.sol
             DecryptedTx, accounts[4], {from: accounts[5]});
+    });
+
+    it('Demo for 5', async function() {
+        let CommitContract = await Commit.deployed();
+        let ProcessContract = await Process.deployed();
+        let blocknumber = 4000; // pick a future block number
+        await ProcessContract.deposit({from: accounts[7],value: 20e18});
+        var rawTx1 = {
+            data: '0xc0de',
+            value: 1,
+            FUNC_SELECTOR: "sayHello(bytes,address)",
+            threshold: 100,
+            rand: '0x001',
+            parameter1: accounts[1]
+        };
+        var rawTx2 = {
+            data: '0xc0de',
+            value: 1,
+            FUNC_SELECTOR: "sayHello(bytes,address)",
+            threshold: 100,
+            rand: '0x001',
+            parameter1: accounts[2]
+        };
+        var rawTx3 = {
+            data: '0xc0de',
+            value: 1,
+            FUNC_SELECTOR: "sayHello(bytes,address)",
+            threshold: 100,
+            rand: '0x001',
+            parameter1: accounts[3]
+        };
+        var rawTx4 = {
+            data: '0xc0de',
+            value: 1,
+            FUNC_SELECTOR: "sayHello(bytes,address)",
+            threshold: 100,
+            rand: '0x001',
+            parameter1: accounts[4]
+        };
+        var rawTx5 = {
+            data: '0xc0de',
+            value: 1,
+            FUNC_SELECTOR: "sayHello(bytes,address)",
+            threshold: 100,
+            rand: '0x001',
+            parameter1: accounts[5]
+        };
+        let tx1 = web3.eth.abi.encodeParameters(
+            ['bytes', 'uint', 'string','uint','bytes','address'],
+            [rawTx1.data, rawTx1.value, rawTx1.FUNC_SELECTOR,rawTx1.threshold,rawTx1.rand,rawTx1.parameter1]
+        );
+        let tx2 = web3.eth.abi.encodeParameters(
+            ['bytes', 'uint', 'string','uint','bytes','address'],
+            [rawTx2.data, rawTx2.value, rawTx2.FUNC_SELECTOR,rawTx2.threshold,rawTx2.rand,rawTx2.parameter1]
+        );
+        let tx3 = web3.eth.abi.encodeParameters(
+            ['bytes', 'uint', 'string','uint','bytes','address'],
+            [rawTx3.data, rawTx3.value, rawTx3.FUNC_SELECTOR,rawTx3.threshold,rawTx3.rand,rawTx3.parameter1]
+        );
+        let tx4 = web3.eth.abi.encodeParameters(
+            ['bytes', 'uint', 'string','uint','bytes','address'],
+            [rawTx4.data, rawTx4.value, rawTx4.FUNC_SELECTOR,rawTx4.threshold,rawTx4.rand,rawTx4.parameter1]
+        );
+        let tx5 = web3.eth.abi.encodeParameters(
+            ['bytes', 'uint', 'string','uint','bytes','address'],
+            [rawTx5.data, rawTx5.value, rawTx5.FUNC_SELECTOR,rawTx5.threshold,rawTx5.rand,rawTx5.parameter1]
+        );
+        let Commitment1 = web3.utils.soliditySha3(tx1) // make the hash commitment of plain text
+        await CommitContract.makeCommitment(tx1, Commitment1, blocknumber, {from: accounts[7], value: 1e18});
+        let Commitment2 = web3.utils.soliditySha3(tx2) // make the hash commitment of plain text
+        await CommitContract.makeCommitment(tx2, Commitment2, blocknumber, {from: accounts[7], value: 1e18});
+        let Commitment3 = web3.utils.soliditySha3(tx3) // make the hash commitment of plain text
+        await CommitContract.makeCommitment(tx3, Commitment3, blocknumber, {from: accounts[7], value: 1e18});
+        let Commitment4 = web3.utils.soliditySha3(tx4) // make the hash commitment of plain text
+        await CommitContract.makeCommitment(tx4, Commitment4, blocknumber, {from: accounts[7], value: 1e18});
+        let Commitment5 = web3.utils.soliditySha3(tx5) // make the hash commitment of plain text
+        await CommitContract.makeCommitment(tx5, Commitment5, blocknumber, {from: accounts[7], value: 1e18});
+
+        // execution
+        let indexes = [0,1,2,3,4] // indexes wants to process
+        let transactions = [tx1, tx2, tx3, tx4, tx5] // information list
+        let owners = [accounts[7], accounts[7], accounts[7], accounts[7], accounts[7]]
+        await ProcessContract.batchExecuteTX(
+            blocknumber, indexes, // This is the index of commitment in Commit.sol
+            transactions, owners, {from: accounts[5]});
     });
 
     //============================Unit Testing=========================

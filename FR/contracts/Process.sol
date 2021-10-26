@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: MIT
 pragma solidity >=0.4.22 <0.9.0;
+pragma experimental ABIEncoderV2;
 
 import {Commit} from "./Commit.sol";
 import {Participate} from "./Participate.sol";
@@ -40,14 +41,54 @@ contract Process {
     return balances[msg.sender];
   }
 
+
+  function batchExecuteTX(uint BlockNumber,
+                          uint[5] memory indexes, // indexes wants to process
+                          bytes[5] memory transactions, // information list
+                          address[5] memory owners) public { // owners list
+    bool flag = false;
+   // require(block.number == BlockNumber, "Require for current block"); //TODO Here restriction to blocknumber
+   // require(indexes[0] % 5 != 0 && indexes[1] + 1 == indexes[2] && indexes[2] + 1 == indexes[3] && indexes[3] + 1 == indexes[4], "wrong format");
+    uint8[5] memory numberArr = [0,1,2,3,4];
+
+    // randomness generated here by the bytes provieded by users
+    bytes32 random = keccak256(abi.encodePacked(msg.sender, block.timestamp));
+    for (uint8 j = 0; j < 5; j++) {
+      TX memory aTx = _decode(transactions[j]);
+      random = keccak256(abi.encodePacked(random, aTx.rand));
+    }
+
+    // Shuffling happens here
+    for (uint8 i = 0; i < 5; i++) {
+      uint8 n = i + uint8(uint256(random) % (5 - i));
+      uint8 temp = numberArr[n];
+      numberArr[n] = numberArr[i];
+      numberArr[i] = temp;
+    }
+
+    for (uint8 i = 0; i < 5; i++) {
+      uint8 cur = numberArr[i];
+      executeTX(BlockNumber, indexes[cur], transactions[cur], owners[cur]);
+    }
+
+    //require(block.number >= BlockNumber, "Block number not matching");
+    //require(block.number <= BlockNumber + aTX.threshold, "Block number not matching");
+
+  }
+
+  function executePrevTx(uint BlockNumber, uint index, bytes memory transaction, address owner) {
+    TX memory aTX = _decode(transaction);
+    require(block.number > BlockNumber, "Block number not matching");
+    require(block.number <= BlockNumber + aTX.threshold, "Block number not matching");
+    executeTX(BlockNumber, index, transaction, owner);
+  }
+
   // This function execute one transaction
-  function executeTX(uint BlockNumber, uint index, bytes memory transaction, address owner) public {
+  function executeTX(uint BlockNumber, uint index, bytes memory transaction, address owner) public { //TODO Change it to private, return boolean
 
     uint length = CommitContract.getLength(BlockNumber);
     TX memory aTX = _decode(transaction); // decoding
 
-    //require(block.number >= BlockNumber, "Block number not matching");
-    //require(block.number <= BlockNumber + aTX.threshold, "Block number not matching");
     bytes32 commitment = keccak256(abi.encodePacked(transaction));
     commitment = keccak256(abi.encodePacked(owner, commitment));
 
@@ -58,7 +99,7 @@ contract Process {
     if(commitment == CommitContract.getCommitment(BlockNumber, index)) {
       // TODO Pass commitment, end of participator's duty, reward should be given to processor msg.sender
       ProcessedList[BlockNumber][index] = true;
-   //   require(balances[owner] >= aTX.value, "Not enough money");
+      require(balances[owner] >= aTX.value, "Not enough money");
       emit CommitmentConfirmed(BlockNumber, index);
       // Pass the transaction to target address
       bytes4 FUNC = bytes4(keccak256(bytes(aTX.FUNC_SELECTOR)));
