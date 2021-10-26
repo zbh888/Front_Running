@@ -37,6 +37,9 @@
       blockNumber: 4000 (type: uint256),
       index: 4 (type: uint256)
     )
+    ---------------------------
+    
+    ---------------------------
 
     Process.CommitmentConfirmed(
       BlockNumber: 4000 (type: uint256),
