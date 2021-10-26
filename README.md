@@ -28,6 +28,6 @@
 
 ## CryptPart
 
-1. `cd IBEcrypto`
+1. `cd CryptPart/IBEcrypto`
 
 2. `go test`
