@@ -10,4 +10,12 @@
 
 `FR` contains solidity smart contracts.
 
-`Cryp`
+`CryptPart` contains the Golang code for IBE threshold encryption and decryption. This is built upon the IBE implementation of `vuvuzela/crypto`.
+
+# Run tests
+
+## FR
+
+1. ``
+
+## CryptPart
