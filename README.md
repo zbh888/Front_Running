@@ -27,3 +27,7 @@
 5. `truffle test --show-events` or `truffle test`
 
 ## CryptPart
+
+1. `cd IBEcrypto`
+
+2. `go test`
