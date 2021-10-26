@@ -16,6 +16,14 @@
 
 ## FR
 
-1. ``
+1. `cd FR`
+
+2. `truffle compile`
+
+3. open Ganache, make sure what in the `truffle-config.js` matches with Ganache
+
+4. `truffle  migrate`
+
+5. `truffle test --show-events` or `truffle test`
 
 ## CryptPart
