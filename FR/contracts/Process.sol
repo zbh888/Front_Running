@@ -76,7 +76,7 @@ contract Process {
 
   }
 
-  function executePrevTx(uint BlockNumber, uint index, bytes memory transaction, address owner) {
+  function executePrevTx(uint BlockNumber, uint index, bytes memory transaction, address owner) public {
     TX memory aTX = _decode(transaction);
     require(block.number > BlockNumber, "Block number not matching");
     require(block.number <= BlockNumber + aTX.threshold, "Block number not matching");
