@@ -1,5 +1,7 @@
 # Front_Running
 
+[Fairblock: Preventing blockchain front-running with minimal overheads](https://scholar.google.com/citations?view_op=view_citation&hl=zh-CN&user=rqRcfVsAAAAJ&citation_for_view=rqRcfVsAAAAJ:d1gkVwhDpl0C)
+
 [ETHDKG implementation](https://github.com/PhilippSchindler/ethdkg/)
 
 [Ferveo for VSS on the public chain](https://anoma.network/blog/ferveo-a-distributed-key-generation-scheme-for-front-running-protection/)
